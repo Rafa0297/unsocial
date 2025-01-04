@@ -14,6 +14,15 @@ db.connect(process.env.MONGO_URL).then(() => {
 
   server.use(cors())
 
+  const corsOptions = {
+    origin: 'https://scintillating-wisp-2621ca.netlify.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  }
+
+  server.use(cors(corsOptions))
+
   const jsonBodyParser = json()
 
   server.get('/', (_req, res) => res.send('Hello, API!'))
