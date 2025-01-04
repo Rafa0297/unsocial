@@ -1,27 +1,26 @@
-import { useState, useEffect } from "react"
-import { Post } from "./components/functional/index"
-import logic from "../logic"
+import { useState, useEffect } from 'react'
+import { Post } from './components/functional/index'
+import logic from '../logic'
 import './Home.css'
-import {errors} from 'com'
+import { errors } from 'common'
 
-const {SystemError} = errors
+const { SystemError } = errors
 
 export default function Posts() {
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
-    console.log(('Posts -> useEffect "componentDidMount"'))
+    console.log('Posts -> useEffect "componentDidMount"')
 
     try {
-      logic.getPosts()
-        .then(posts => {
+      logic
+        .getPosts()
+        .then((posts) => {
           setPosts(posts)
         })
-        .catch(error => {
-          if (error instanceof SystemError)
-            alert('Sorry, try again later')
-          else
-            alert(error.message)
+        .catch((error) => {
+          if (error instanceof SystemError) alert('Sorry, try again later')
+          else alert(error.message)
 
           console.error(error)
         })
@@ -33,15 +32,14 @@ export default function Posts() {
 
   const handleLiked = () => {
     try {
-      logic.getPosts()
-        .then(posts => {
+      logic
+        .getPosts()
+        .then((posts) => {
           setPosts(posts)
         })
-        .catch(error => {
-          if (error instanceof SystemError)
-            alert('Sorry, try again later')
-          else
-            alert(error.message)
+        .catch((error) => {
+          if (error instanceof SystemError) alert('Sorry, try again later')
+          else alert(error.message)
 
           console.error(error)
         })
@@ -53,18 +51,17 @@ export default function Posts() {
 
   const handleDeleted = () => {
     try {
-      logic.getPosts()
-      .then(posts => {
-        setPosts(posts)
-      })
-      .catch(error => {
-        if (error instanceof SystemError)
-          alert('Sorry, try again later')
-        else
-          alert(error.message)
+      logic
+        .getPosts()
+        .then((posts) => {
+          setPosts(posts)
+        })
+        .catch((error) => {
+          if (error instanceof SystemError) alert('Sorry, try again later')
+          else alert(error.message)
 
-        console.error(error)
-      })
+          console.error(error)
+        })
     } catch (error) {
       alert(error.message)
       console.error(error)
@@ -73,15 +70,14 @@ export default function Posts() {
 
   const handleCommentRemoved = () => {
     try {
-      logic.getPosts()
-        .then(posts => {
+      logic
+        .getPosts()
+        .then((posts) => {
           setPosts(posts)
         })
-        .catch(error => {
-          if (error instanceof SystemError)
-            alert('Sorry, try again later')
-          else
-            alert(error.message)
+        .catch((error) => {
+          if (error instanceof SystemError) alert('Sorry, try again later')
+          else alert(error.message)
 
           console.error(error)
         })
@@ -93,15 +89,14 @@ export default function Posts() {
 
   const handleCommentAdded = () => {
     try {
-      logic.getPosts()
-        .then(posts => {
+      logic
+        .getPosts()
+        .then((posts) => {
           setPosts(posts)
         })
-        .catch(error => {
-          if (error instanceof SystemError)
-            alert('Sorry, try again later')
-          else
-            alert(error.message)
+        .catch((error) => {
+          if (error instanceof SystemError) alert('Sorry, try again later')
+          else alert(error.message)
 
           console.error(error)
         })
@@ -115,13 +110,16 @@ export default function Posts() {
 
   return (
     <main className="Home pt-12 pb-12 flex items-center justify-center flex-col  bg-white">
-      {posts.map(post => <Post
-        key={post.id}
-        post={post}
-        onLiked={handleLiked}
-        onDeleted={handleDeleted}
-        onCommentRemoved={handleCommentRemoved}
-        onCommentAdded={handleCommentAdded} />)}
+      {posts.map((post) => (
+        <Post
+          key={post.id}
+          post={post}
+          onLiked={handleLiked}
+          onDeleted={handleDeleted}
+          onCommentRemoved={handleCommentRemoved}
+          onCommentAdded={handleCommentAdded}
+        />
+      ))}
     </main>
   )
 }

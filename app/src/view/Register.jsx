@@ -2,7 +2,7 @@
 import './Register.css'
 import logic from '../logic'
 import { PasswordInput, Input, Button, Label, Form } from './components/library'
-import { errors } from 'com'
+import { errors } from 'common'
 import useContext from './useContext'
 
 const { SystemError } = errors

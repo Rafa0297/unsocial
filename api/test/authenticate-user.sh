@@ -1,1 +1,1 @@
- curl -H 'Content-Type: application/json' -d '{"username":"camiloses","password":"123123123"}' http://localhost:8080/users/auth -v
+ curl -H 'Content-Type: application/json' -d '{"username":"simonbolivar","password":"123123123"}' https://unsocial-2lgb.onrender.com/users/auth -v
