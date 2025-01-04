@@ -6,7 +6,7 @@ export default (postId, commentId) => {
   validate.id(postId, 'postId')
   validate.id(commentId, 'commentId')
 
-  return fetch(`http://${import.meta.env.VITE_API_URL}/posts/${postId}/comments/${commentId}`, {
+  return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}/comments/${commentId}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${sessionStorage.token}` },
   })

@@ -9,7 +9,7 @@ export default (name, email, username, password, confirmPassword) => {
   validate.password(password)
   validate.passwordsMatch(password, confirmPassword)
 
-  return fetch(`http://${import.meta.env.VITE_API_URL}/users`, {
+  return fetch(`${import.meta.env.VITE_API_URL}/users`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

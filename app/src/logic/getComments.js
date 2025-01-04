@@ -5,7 +5,7 @@ const { SystemError } = errors
 export default (postId) => {
   validate.id(postId, 'postId')
 
-  return fetch(`http://${import.meta.env.VITE_API_URL}/posts/${postId}/comments`, {
+  return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}/comments`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${sessionStorage.token}`,

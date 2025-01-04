@@ -5,7 +5,7 @@ const { SystemError } = errors
 export default (postId) => {
   validate.id(postId, 'postId')
 
-  return fetch(`http://${import.meta.env.VITE_API_URL}/posts/${postId}`, {
+  return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${sessionStorage.token}`,

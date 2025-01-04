@@ -6,7 +6,7 @@ export default (postId, text) => {
   validate.id(postId, 'postId')
   validate.text(text)
 
-  return fetch(`http://${import.meta.env.VITE_API_URL}/posts/${postId}/comments`, {
+  return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}/comments`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${sessionStorage.token}`,
