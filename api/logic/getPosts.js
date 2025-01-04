@@ -1,19 +1,21 @@
-import { User, Post } from "dat"
-import { validate, errors } from "com"
+import { User, Post } from '../data/index.js'
+import { validate, errors } from '../../common/index.js'
 const { SystemError, NotFoundError } = errors
 
-export default userId => {
+export default (userId) => {
   validate.id(userId, 'userId')
 
   return Promise.all([
     User.findById(userId).lean(),
-    Post.find().populate('author', 'username').sort({ date: -1 }).lean()
+    Post.find().populate('author', 'username').sort({ date: -1 }).lean(),
   ])
-    .catch(error => { throw new SystemError(error.message) })
+    .catch((error) => {
+      throw new SystemError(error.message)
+    })
     .then(([user, posts]) => {
       if (!user) throw new NotFoundError('user not found')
 
-      posts.forEach(post => {
+      posts.forEach((post) => {
         post.id = post._id.toString()
         delete post._id
 
@@ -24,7 +26,7 @@ export default userId => {
 
         const { likes, comments } = post
 
-        post.liked = likes.some(userObjectId => userObjectId.equals(userId))
+        post.liked = likes.some((userObjectId) => userObjectId.equals(userId))
         post.likes = likes.length
 
         post.comments = comments.length

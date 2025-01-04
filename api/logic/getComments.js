@@ -1,5 +1,5 @@
-import { User, Post } from 'dat'
-import { validate, errors } from "com"
+import { User, Post } from '../data/index.js'
+import { validate, errors } from '../../common/index.js'
 const { SystemError, NotFoundError } = errors
 
 export default (userId, postId) => {
@@ -8,16 +8,18 @@ export default (userId, postId) => {
 
   return Promise.all([
     User.exists({ _id: userId }),
-    Post.findById(postId).populate('comments.author', 'username').lean()
+    Post.findById(postId).populate('comments.author', 'username').lean(),
   ])
-    .catch(error => { throw new SystemError(error.message) })
+    .catch((error) => {
+      throw new SystemError(error.message)
+    })
     .then(([userExists, post]) => {
       if (!userExists) throw new NotFoundError('user not found')
       if (!post) throw new NotFoundError('post not found')
 
       const { comments } = post
 
-      comments.forEach(comment => {
+      comments.forEach((comment) => {
         comment.id = comment._id.toString()
         delete comment._id
 
@@ -29,9 +31,7 @@ export default (userId, postId) => {
       })
 
       return comments
-
     })
-
 
   // db.users.findOne({ _id: objectUserId })
   //   .catch(error => { throw new SystemError(error.message) })

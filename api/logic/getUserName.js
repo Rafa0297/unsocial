@@ -1,5 +1,5 @@
-import { User } from 'dat'
-import { validate, errors } from "com";
+import { User } from '../data/index.js'
+import { validate, errors } from '../../common/index.js'
 const { NotFoundError, SystemError } = errors
 
 export default (userId, targetUserId) => {
@@ -7,7 +7,9 @@ export default (userId, targetUserId) => {
   validate.id(targetUserId, 'targetUserId')
 
   return Promise.all([User.findById(userId).lean(), User.findById(targetUserId).lean()])
-    .catch(error => { throw new SystemError(error.message) })
+    .catch((error) => {
+      throw new SystemError(error.message)
+    })
     .then(([user, targetUser]) => {
       if (!user) throw new NotFoundError('user not found')
       if (!targetUser) throw new NotFoundError('target user not found')

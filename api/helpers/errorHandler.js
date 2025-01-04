@@ -1,24 +1,32 @@
-import { errors } from 'com'
+import { errors } from 'common'
 
-const { ValidationError, NotFoundError, CredentialsError, DuplicityError, OwnershipError, SystemError, AuthorizationError } = errors
+const {
+  ValidationError,
+  NotFoundError,
+  CredentialsError,
+  DuplicityError,
+  OwnershipError,
+  SystemError,
+  AuthorizationError,
+} = errors
 
 export default (error, req, res, next) => {
   let status = 500
 
   switch (true) {
-    case (error instanceof ValidationError):
+    case error instanceof ValidationError:
       status = 406
       break
-    case (error instanceof NotFoundError):
+    case error instanceof NotFoundError:
       status = 404
       break
-    case (error instanceof CredentialsError || error instanceof AuthorizationError):
+    case error instanceof CredentialsError || error instanceof AuthorizationError:
       status = 401
       break
-    case (error instanceof DuplicityError):
+    case error instanceof DuplicityError:
       status = 409
       break
-    case (error instanceof OwnershipError):
+    case error instanceof OwnershipError:
       status = 403
       break
   }

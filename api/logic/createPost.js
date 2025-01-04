@@ -1,5 +1,5 @@
-import { User, Post } from 'dat'
-import { validate, errors } from 'com'
+import { User, Post } from '../data/index.js'
+import { validate, errors } from '../../common/index.js'
 
 const { NotFoundError, SystemError } = errors
 
@@ -9,16 +9,19 @@ export default (userId, image, text) => {
   validate.text(text)
 
   return User.findById(userId)
-    .catch(error => { throw new SystemError(error.message) })
-    .then(user => {
+    .catch((error) => {
+      throw new SystemError(error.message)
+    })
+    .then((user) => {
       if (!user) throw new NotFoundError('user not found')
 
       return Post.create({
         author: userId,
         image,
-        text
+        text,
+      }).catch((error) => {
+        throw new SystemError(error.message)
       })
-        .catch(error => { throw new SystemError(error.message) })
     })
-    .then(_ => { })
+    .then((_) => {})
 }

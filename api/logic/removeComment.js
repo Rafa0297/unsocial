@@ -1,5 +1,5 @@
-import { User, Post } from 'dat'
-import { validate, errors } from "com"
+import { User, Post } from '../data/index.js'
+import { validate, errors } from '../../common/index.js'
 const { SystemError, NotFoundError, OwnershipError } = errors
 
 export default (userId, postId, commentId) => {
@@ -7,11 +7,10 @@ export default (userId, postId, commentId) => {
   validate.id(postId, 'postId')
   validate.id(commentId, 'commentId')
 
-  return Promise.all([
-    User.findById(userId),
-    Post.findById(postId)
-  ])
-    .catch(error => { new SystemError(error.message) })
+  return Promise.all([User.findById(userId), Post.findById(postId)])
+    .catch((error) => {
+      new SystemError(error.message)
+    })
     .then(([user, post]) => {
       if (!user) throw new NotFoundError('user not found')
       if (!post) throw new NotFoundError('post not found')
@@ -24,8 +23,9 @@ export default (userId, postId, commentId) => {
 
       comment.deleteOne({ _id: commentId })
 
-      return post.save()
-        .catch(error => { new SystemError(error.message) })
+      return post.save().catch((error) => {
+        new SystemError(error.message)
+      })
     })
-    .then(_ => { })
+    .then((_) => {})
 }

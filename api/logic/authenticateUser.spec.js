@@ -1,17 +1,17 @@
 import 'dotenv/config'
 import * as chai from 'chai'
-import chaiAsPromised from 'chai-as-promised';
+import chaiAsPromised from 'chai-as-promised'
 import bcrypt from 'bcryptjs'
 
 chai.use(chaiAsPromised)
 const { expect } = chai
 
-import db, { User } from "dat";
-import { errors } from 'com'
+import db, { User } from '../data/index.js'
+import { errors } from '../../common/index.js'
 
 const { CredentialsError } = errors
 
-import authenticateUser from "./authenticateUser.js";
+import authenticateUser from './authenticateUser.js'
 
 debugger
 
@@ -25,23 +25,18 @@ describe('authenticateUser', () => {
       name: 'Coco Loco',
       email: 'coco@loco.com',
       username: 'cocoloco',
-      password: bcrypt.hashSync('123123123', 10)
+      password: bcrypt.hashSync('123123123', 10),
     })
       .then(() => authenticateUser('cocoloco', '123123123'))
-      .then(user => {
+      .then((user) => {
         expect(user).to.exist
         expect(user.id).to.be.a.string
         expect(user.id).to.have.lengthOf(24)
         expect(user.role).to.equal('regular')
-      })
-  )
+      }))
 
   it('fails on non-existing user', () =>
-    expect(
-      authenticateUser('cocoloco', '123123123')
-    ).to.be.rejectedWith(CredentialsError, 'wrong credentials')
-  )
+    expect(authenticateUser('cocoloco', '123123123')).to.be.rejectedWith(CredentialsError, 'wrong credentials'))
 
   after(() => db.disconnect())
 })
-
